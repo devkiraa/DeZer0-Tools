@@ -5,7 +5,7 @@
   "version": "v1.0",
   "category": "Wi-Fi",
   "size": "2 KiB",
-  "description": "Scans for nearby 2.4GHz Wi-Fi networks.",
+  "description": "Scans for nearby 2.4GHz Wi-Fi networks and displays the results.",
   "script_filename": "wifi_scanner.py",
   "changelog": "v1.0 - Initial release."
 }
