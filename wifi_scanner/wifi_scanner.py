@@ -1,30 +1,38 @@
-# This script runs on the DeZer0 device
+# This script is sent from the Flutter app and executed on the DeZer0 device.
 
-# The firmware automatically provides the 'send_log' function.
-# We don't need to import it.
+# The main firmware provides these modules and the 'send_log' function.
+import network
+import ujson
+import time
 
 send_log("--- Wi-Fi Scanner Tool Initialized ---")
 
 def run_scan():
     """Scans for networks and sends results back to the app."""
     
-    # The firmware provides 'network' and 'ujson' to the script
     sta_if = network.WLAN(network.STA_IF)
+    
+    # The device must be connected to Wi-Fi for the server to be running.
+    # This check is good practice.
     if not sta_if.isconnected():
-        send_log("Error: Not connected to Wi-Fi.")
+        send_log("Error: Wi-Fi is disconnected.")
         return
 
-    send_log("Scanning for Wi-Fi networks...")
+    send_log("Scanning for nearby networks...")
     networks_found = sta_if.scan()
     send_log(f"Found {len(networks_found)} networks.")
 
-    # We send results back to the app by printing a formatted JSON string.
-    results = {"type": "wifi_scan_results", "networks": []}
+    # Prepare the structured data for the app
+    results_payload = {"type": "wifi_scan_results", "networks": []}
     for ssid, bssid, channel, rssi, authmode, hidden in networks_found:
-        results["networks"].append({"ssid": ssid.decode('utf-8', 'ignore'), "rssi": rssi})
+        results_payload["networks"].append({
+            "ssid": ssid.decode('utf-8', 'ignore'),
+            "rssi": rssi
+        })
 
     # Send the final result object back to the app using the RESULT: prefix
-    send_log("RESULT:" + ujson.dumps(results))
+    # The Flutter app looks for this prefix to parse the data.
+    send_log("RESULT:" + ujson.dumps(results_payload))
 
 # --- Main execution of this script ---
 try:
