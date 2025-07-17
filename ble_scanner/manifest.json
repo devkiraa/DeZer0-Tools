@@ -1,0 +1,11 @@
+{
+  "id": "ble_scanner",
+  "name": "Bluetooth Low Energy Scanner",
+  "author": "YourGitHubUsername",
+  "version": "v1.0",
+  "category": "Bluetooth",
+  "size": "3 KiB",
+  "description": "Scans for nearby Bluetooth Low Energy devices and displays the results.",
+  "script_filename": "ble_scanner.py",
+  "changelog": "v1.0 - Initial release."
+}
