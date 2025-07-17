@@ -1,6 +1,6 @@
 # wifi_scanner.py
 # This script uses the standard print() function.
-# The DeZer0 firmware will redirect its output to the app.
+# The DeZer0 firmware will redirect all its output to the app.
 
 import network
 import ujson
