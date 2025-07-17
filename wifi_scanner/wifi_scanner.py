@@ -8,17 +8,17 @@ def run_scan():
     import network
     import ujson
 
-    print("--- Wi-Fi Scanner Tool Initialized ---")
+    send_log("--- Wi-Fi Scanner Tool Initialized ---")
     
     sta_if = network.WLAN(network.STA_IF)
     
     if not sta_if.isconnected():
-        print("Error: Wi-Fi is disconnected.")
+        send_log("Error: Wi-Fi is disconnected.")
         return
 
-    print("Scanning for nearby networks...")
+    send_log("Scanning for nearby networks...")
     networks_found = sta_if.scan()
-    print(f"Found {len(networks_found)} networks.")
+    send_log(f"Found {len(networks_found)} networks.")
 
     # Prepare the structured data for the app
     results_payload = {"type": "wifi_scan_results", "networks": []}
@@ -29,11 +29,11 @@ def run_scan():
         })
 
     # Send the final result object back to the app using the RESULT: prefix
-    print("RESULT:" + ujson.dumps(results_payload))
+    send_log("RESULT:" + ujson.dumps(results_payload))
 
 # --- Main execution of this script ---
 try:
     run_scan()
-    print("--- Scan Complete ---")
+    send_log("--- Scan Complete ---")
 except Exception as e:
-    print(f"Script Error: {e}")
+    send_log(f"Script Error: {e}")
