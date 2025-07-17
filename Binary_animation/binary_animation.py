@@ -1,33 +1,40 @@
-import urandom
-import time
+# wifi_scanner.py - Return-based version
 
-# --- Configuration ---
-# You can adjust these values to change the animation.
-ANIMATION_DURATION_S = 15  # How long the animation should run in seconds
-LINE_WIDTH = 20            # The width of the binary string line
-FRAME_DELAY_MS = 90        # Delay between each line in milliseconds
+import network
+import ujson
 
-def generate_binary_line(width):
-    """Generates a random string of 0s and 1s of a given width."""
-    line = ""
-    for _ in range(width):
-        # urandom.getrandbits(1) returns either 0 or 1
-        line += str(urandom.getrandbits(1))
-    return line
+# This script MUST contain a function named run_tool()
+def run_tool():
+    """
+    Scans for networks and returns a formatted string with all logs and results.
+    """
+    
+    # Use a list to collect all output lines
+    output_lines = []
+    output_lines.append("--- Wi-Fi Scanner Tool Initialized ---")
+    
+    sta_if = network.WLAN(network.STA_IF)
+    if not sta_if.isconnected():
+        output_lines.append("Error: Wi-Fi is disconnected.")
+        return "\n".join(output_lines)
 
-def run_animation():
-    """Runs the binary rain animation by printing to the console."""
-    print("--- Binary Animation Started ---")
+    output_lines.append("Scanning for nearby networks...")
+    networks_found = sta_if.scan()
+    output_lines.append(f"Found {len(networks_found)} networks.")
 
-    start_time = time.time()
+    # Prepare the structured data
+    results_payload = {"type": "wifi_scan_results", "networks": []}
+    for ssid, bssid, channel, rssi, authmode, hidden in networks_found:
+        results_payload["networks"].append({
+            "ssid": ssid.decode('utf-8', 'ignore'),
+            "rssi": rssi
+        })
 
-    # Loop for the specified duration
-    while (time.time() - start_time) < ANIMATION_DURATION_S:
-        binary_line = generate_binary_line(LINE_WIDTH)
-        print(binary_line)
-        time.sleep_ms(FRAME_DELAY_MS)
+    # Add the final result object to our output using the RESULT: prefix
+    output_lines.append("RESULT:" + ujson.dumps(results_payload))
+    output_lines.append("--- Scan Complete ---")
+    
+    # Return all the collected lines, joined together by newlines
+    return "\n".join(output_lines)
 
-    print("--- Animation Complete ---")
-
-# --- Main execution of the script ---
-run_animation()
+# The firmware calls run_tool(), so no code is needed here in the global scope.
