@@ -1,0 +1,11 @@
+{
+  "id": "binary_animation",
+  "name": "Binary Animation",
+  "author": "Gemini Code Assist",
+  "version": "v1.0",
+  "category": "Display",
+  "size": "1 KiB",
+  "description": "Displays a simple binary rain animation on the console.",
+  "script_filename": "binary_animation.py",
+  "changelog": "v1.0 - Initial release."
+}
