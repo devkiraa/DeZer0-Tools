@@ -1,19 +1,17 @@
-# This script is sent from the Flutter app and executed on the DeZer0 device.
+# wifi_scanner.py - Final Version
 
-# The main firmware provides these modules and the 'send_log' function.
-import network
-import ujson
-import time
-
-send_log("--- Wi-Fi Scanner Tool Initialized ---")
+# The main firmware provides these modules to the script's environment.
+# We only need to import them if we use them inside functions.
 
 def run_scan():
     """Scans for networks and sends results back to the app."""
+    import network
+    import ujson
+
+    send_log("--- Wi-Fi Scanner Tool Initialized ---")
     
     sta_if = network.WLAN(network.STA_IF)
     
-    # The device must be connected to Wi-Fi for the server to be running.
-    # This check is good practice.
     if not sta_if.isconnected():
         send_log("Error: Wi-Fi is disconnected.")
         return
@@ -31,7 +29,6 @@ def run_scan():
         })
 
     # Send the final result object back to the app using the RESULT: prefix
-    # The Flutter app looks for this prefix to parse the data.
     send_log("RESULT:" + ujson.dumps(results_payload))
 
 # --- Main execution of this script ---
