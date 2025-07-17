@@ -2,7 +2,7 @@
   "id": "wifi_scanner",
   "name": "Wi-Fi Scanner",
   "author": "devkiraa",
-  "version": "v2.2",
+  "version": "v2.3",
   "category": "Wi-Fi",
   "size": "2 KiB",
   "description": "Scans for nearby 2.4GHz Wi-Fi networks and displays the results.",

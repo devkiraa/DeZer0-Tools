@@ -1,26 +1,28 @@
 # wifi_scanner.py
-# This script uses the standard print() function.
-# The DeZer0 firmware will redirect all its output to the app.
+# This script defines a run_tool() function that returns all its output as a single string.
 
 import network
 import ujson
 import time
 
-print("--- Wi-Fi Scanner Tool Initialized ---")
-
-def run_scan():
-    """Scans for networks and prints results as JSON."""
+def run_tool():
+    """Scans for networks and returns a formatted string with all logs and results."""
+    
+    # Use a list to collect all output lines
+    output_lines = []
+    output_lines.append("--- Wi-Fi Scanner Tool Initialized ---")
     
     sta_if = network.WLAN(network.STA_IF)
     
     if not sta_if.isconnected():
-        print("Error: Wi-Fi is disconnected.")
-        return
+        output_lines.append("Error: Wi-Fi is disconnected.")
+        return "\n".join(output_lines)
 
-    print("Scanning for nearby networks...")
+    output_lines.append("Scanning for nearby networks...")
     networks_found = sta_if.scan()
-    print(f"Found {len(networks_found)} networks.")
+    output_lines.append(f"Found {len(networks_found)} networks.")
 
+    # Prepare the structured data
     results_payload = {"type": "wifi_scan_results", "networks": []}
     for ssid, bssid, channel, rssi, authmode, hidden in networks_found:
         results_payload["networks"].append({
@@ -28,12 +30,11 @@ def run_scan():
             "rssi": rssi
         })
 
-    # Send the final result object back to the app by printing it with a prefix
-    print("RESULT:" + ujson.dumps(results_payload))
+    # Add the final result object to our output using the RESULT: prefix
+    output_lines.append("RESULT:" + ujson.dumps(results_payload))
+    output_lines.append("--- Scan Complete ---")
+    
+    # Return all the collected lines, joined together by newlines
+    return "\n".join(output_lines)
 
-# --- Main execution of this script ---
-try:
-    run_scan()
-    print("--- Scan Complete ---")
-except Exception as e:
-    print(f"Script Error: {e}")
+# The firmware will call the run_tool() function, so we don't need to call it here.
