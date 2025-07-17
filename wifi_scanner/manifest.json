@@ -1,0 +1,10 @@
+{
+  "id": "wifi_scanner",
+  "name": "Wi-Fi Scanner",
+  "author": "devkiraa",
+  "version": "v1.0",
+  "description": "Scans for nearby 2.4GHz Wi-Fi networks.",
+  "category": "Wi-Fi",
+  "size": "2 KiB",
+  "script_filename": "wifi_scanner.py"
+}
