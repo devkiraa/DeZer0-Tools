@@ -4,7 +4,6 @@
 
 import network
 import ujson
-import time
 
 def run_tool():
     """Scans for networks and returns a formatted string with all logs and results."""
@@ -32,7 +31,7 @@ def run_tool():
         })
 
     # Add the final result object to our output using the RESULT: prefix
-    output_lines.append("RESULT:" + ujson.dumps(results_payload))
+    output_lines.append("RESULT: " + ujson.dumps(results_payload))
     output_lines.append("--- Scan Complete ---")
     
     # Return all the collected lines, joined together by newlines
@@ -42,3 +41,4 @@ def run_tool():
 if __name__ == "__main__":
     result = run_tool()
     print(result)
+    print()  # Ensure final newline
