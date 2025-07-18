@@ -1,5 +1,6 @@
 # wifi_scanner.py
-# This script defines a run_tool() function that returns all its output as a single string.
+# This script defines a run_tool() function and executes it
+# Output is printed so the ESP32 server can capture it
 
 import network
 import ujson
@@ -37,4 +38,7 @@ def run_tool():
     # Return all the collected lines, joined together by newlines
     return "\n".join(output_lines)
 
-# The firmware will call the run_tool() function, so we don't need to call it here.
+# This ensures the script actually runs when executed via exec()
+if __name__ == "__main__":
+    result = run_tool()
+    print(result)
