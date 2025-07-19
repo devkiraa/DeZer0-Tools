@@ -1,0 +1,11 @@
+{
+  "id": "evil_twin_ap",
+  "name": "Evil Twin AP",
+  "author": "DeZer0 Team",
+  "version": "v1.0",
+  "category": "Wi-Fi",
+  "size": "2 KiB",
+  "description": "Creates a fake Wi-Fi Access Point to demonstrate SSID spoofing.",
+  "script_filename": "evil_twin_ap.py",
+  "changelog": "v1.0 - Initial release."
+}

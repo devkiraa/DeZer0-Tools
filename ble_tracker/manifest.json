@@ -1,0 +1,11 @@
+{
+  "id": "ble_tracker",
+  "name": "BLE Tracker",
+  "author": "DeZer0 Team",
+  "version": "v1.0",
+  "category": "Bluetooth",
+  "size": "2 KiB",
+  "description": "Scans for nearby BLE devices like smart bands and headphones.",
+  "script_filename": "ble_tracker.py",
+  "changelog": "v1.0 - Initial release."
+}
